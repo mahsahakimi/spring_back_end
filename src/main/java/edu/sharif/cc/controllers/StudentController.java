@@ -1,13 +1,9 @@
 package edu.sharif.cc.controllers;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.dtos.StudentDTO;
-import edu.sharif.cc.dtos.TeacherDTO;
-import edu.sharif.cc.exceptions.ProblemAlreadyExistsException;
-import edu.sharif.cc.exceptions.ProblemNotFoundException;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

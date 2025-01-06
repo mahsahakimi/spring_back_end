@@ -56,18 +56,6 @@ public class ProblemController {
 //        return problemService.checkProblemAnswer(username, request);
 //    }
 
-    // Get all teachers
-    @GetMapping(path = "/teachers")
-    public List<TeacherDTO> getAllTeachers() {
-        return userService.getAllTeachers();
-    }
-
-    // Get a teacher by username
-    @GetMapping(path = "/teachers/{username}")
-    public TeacherDTO getTeacherByUsername(@PathVariable("username") String username) throws UserNotFoundException {
-        return userService.getTeacherByUsername(username);
-    }
-
     // Add a new user (signup)
 //    @PostMapping(path = "/signup")
 //    public UserDto signup(@RequestBody UserDto user) throws UserAlreadyExistsException {
