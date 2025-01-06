@@ -43,19 +43,22 @@ public class Problem {
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Student> solvedBy;
 
+    private String answer;
+
     public Problem() { // for JPA
     }
 
-    public Problem(String title, String author) {
+    public Problem(String title, String author, String answer) {
         this.title = title;
         this.author = author;
+        this.answer = answer;
     }
 
     public static Problem fromDto(ProblemDTO problemDto) {
-        return new Problem(problemDto.getTitle(), problemDto.getAuthor());
+        return new Problem(problemDto.getTitle(), problemDto.getAuthor(), problemDto.getAnswer());
     }
 
     public static ProblemDTO toDto(Problem problem) {
-        return new ProblemDTO(problem.getTitle(), problem.getAuthor());
+        return new ProblemDTO(problem.getTitle(), problem.getAuthor(), problem.getAnswer());
     }
 }

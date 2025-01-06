@@ -1,14 +1,14 @@
 package edu.sharif.cc.controllers;
 
+import edu.sharif.cc.dtos.CheckAnswerRequest;
 import edu.sharif.cc.dtos.ProblemDTO;
-import edu.sharif.cc.dtos.StudentDTO;
-import edu.sharif.cc.dtos.TeacherDTO;
 import edu.sharif.cc.exceptions.ProblemAlreadyExistsException;
 import edu.sharif.cc.exceptions.ProblemNotFoundException;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,15 +47,19 @@ public class ProblemController {
         return problemService.getProblemByTitle(title);
     }
 
-
     // PATH CHANGED!!!!
     // /problems/checkproblem/:username
     // Check problem answer
-//    @PostMapping("/problems/check/{username}")
-//    public void checkProblemAnswer(@PathVariable String username, @RequestBody CheckAnswerRequest request) throws ProblemNotFoundException, UserNotFoundException {
-//        return problemService.checkProblemAnswer(username, request);
-//    }
+    @PostMapping("/problems/check/{username}")
+    public ResponseEntity<String> checkProblemAnswer(@PathVariable("username") String username, @RequestBody CheckAnswerRequest request) throws ProblemNotFoundException, UserNotFoundException {
+        boolean isCorrect = problemService.checkProblemAnswer(username, request);
 
+        if (isCorrect) {
+            return ResponseEntity.ok("Correct answer!");
+        } else {
+            return ResponseEntity.ok("Incorrect answer. Try again.");
+        }
+    }
     // PATH CHANGED!!!!
     // /saveproblem
     // Add a new problem
@@ -63,4 +67,13 @@ public class ProblemController {
     public void saveProblem(@RequestBody ProblemDTO problem) throws ProblemAlreadyExistsException {
         problemService.saveProblem(problem);
     }
+
+    // Update a problem
+//    @PutMapping("/updateproblem/{title}")
+//    public ResponseEntity<Problem> updateProblem(
+//            @PathVariable String title,
+//            @RequestBody UpdateProblemRequest updateRequest) {
+//        Problem updatedProblem = problemService.updateProblem(title, updateRequest);
+//        return ResponseEntity.ok(updatedProblem);
+//    }
 }

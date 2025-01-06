@@ -58,7 +58,8 @@ public class UserService {
     }
 
     public StudentDTO getStudentByUsername(String username) throws UserNotFoundException {
-        Student student = studentRepository.findByUsername(username);
+        Student student = studentRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
         if (student == null) {
             throw new UserNotFoundException("Student with username '" + username + "' not found.");
         }
@@ -66,7 +67,8 @@ public class UserService {
     }
 
     public List<ProblemDTO> getSolvedProblemsByStudent(String username) throws UserNotFoundException {
-        Student student = studentRepository.findByUsername(username);
+        Student student = studentRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
         if (student == null) {
             throw new UserNotFoundException("Student with username '" + username + "' not found.");
         }
