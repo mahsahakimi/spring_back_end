@@ -56,18 +56,6 @@ public class ProblemController {
 //        return problemService.checkProblemAnswer(username, request);
 //    }
 
-    // Add a new user (signup)
-//    @PostMapping(path = "/signup")
-//    public UserDto signup(@RequestBody UserDto user) throws UserAlreadyExistsException {
-//        return userService.createUser(user);
-//    }
-
-    // Login check
-//    @PostMapping("/login")
-//    public UserDto login(@RequestBody UserDto user) throws UserNotFoundException, InvalidCredentialsException {
-//        return userService.login(user);
-//    }
-
     // PATH CHANGED!!!!
     // /saveproblem
     // Add a new problem
