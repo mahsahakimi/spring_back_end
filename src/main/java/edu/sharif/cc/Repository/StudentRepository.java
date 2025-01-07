@@ -11,6 +11,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByUsername(String username);
 
+    boolean existsByUsername(String username);
+
     // List<Student> findByScoreGreaterThan(int score);
     // List<Student> findByFollowersGreaterThan(int followers);
 }

@@ -1,7 +1,10 @@
 package edu.sharif.cc.controllers;
 
+import edu.sharif.cc.dtos.TokenDTO;
 import edu.sharif.cc.dtos.UserDTO;
+import edu.sharif.cc.exceptions.InvalidCredentialsException;
 import edu.sharif.cc.exceptions.UserAlreadyExistsException;
+import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +21,17 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // added to front-end @ Signup.js
     // Add a new user (signup)
     @PostMapping(path = "/signup")
-    public void signup(@RequestBody UserDTO user) throws UserAlreadyExistsException {
-        userService.createUser(user);
+    public TokenDTO signup(@RequestBody UserDTO user) throws UserAlreadyExistsException {
+        return userService.createUser(user);
     }
 
     // Login check
 //    @PostMapping("/login")
-//    public UserDto login(@RequestBody UserDto user) throws UserNotFoundException, InvalidCredentialsException {
-//        return userService.login(user);
+//    public TokenDTO login(@RequestBody TokenDTO token) throws UserNotFoundException, InvalidCredentialsException {
+//        return userService.login(token);
 //    }
 
 }

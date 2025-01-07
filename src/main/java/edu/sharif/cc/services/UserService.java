@@ -2,10 +2,9 @@ package edu.sharif.cc.services;
 
 import edu.sharif.cc.Repository.StudentRepository;
 import edu.sharif.cc.Repository.TeacherRepository;
-import edu.sharif.cc.dtos.ProblemDTO;
-import edu.sharif.cc.dtos.StudentDTO;
-import edu.sharif.cc.dtos.TeacherDTO;
-import edu.sharif.cc.dtos.UserDTO;
+import edu.sharif.cc.dtos.*;
+import edu.sharif.cc.exceptions.ProblemAlreadyExistsException;
+import edu.sharif.cc.exceptions.UserAlreadyExistsException;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.models.Problem;
 import edu.sharif.cc.models.Student;
@@ -36,14 +35,31 @@ public class UserService {
 //        this.studentRepository = studentRepository;
 //    }
 
-    public void createUser(UserDTO user) {
+    public TokenDTO createUser(UserDTO user) {
         if (user.getType().equalsIgnoreCase("t")) {
-
+            if (teacherRepository.existsByUsername(user.getUsername())) {
+                throw new UserAlreadyExistsException("Teacher with username '" + user.getUsername() + "' already exists.");
+            }
+            else {
+                Teacher teacher = new Teacher(user.getUsername(), user.getName());
+                teacherRepository.save(teacher);
+            }
         }
         else {
-
+            if (studentRepository.existsByUsername(user.getUsername())) {
+                throw new UserAlreadyExistsException("Student with username '" + user.getUsername() + "' already exists.");
+            }
+            else {
+                Student student = new Student(user.getUsername(), user.getName());
+                studentRepository.save(student);
+            }
         }
+        return new TokenDTO(user.getUsername(), user.getPassword(), user.getType());
     }
+
+//    public TokenDTO login() {
+//
+//    };
 
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = teacherRepository.findAll();
