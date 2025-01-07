@@ -2,9 +2,9 @@ package edu.sharif.cc.controllers;
 
 import edu.sharif.cc.dtos.TokenDTO;
 import edu.sharif.cc.dtos.UserDTO;
-import edu.sharif.cc.exceptions.InvalidCredentialsException;
+// import edu.sharif.cc.exceptions.InvalidCredentialsException;
 import edu.sharif.cc.exceptions.UserAlreadyExistsException;
-import edu.sharif.cc.exceptions.UserNotFoundException;
+// import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
