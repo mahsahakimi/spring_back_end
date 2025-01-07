@@ -5,6 +5,7 @@ import edu.sharif.cc.Repository.TeacherRepository;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.dtos.StudentDTO;
 import edu.sharif.cc.dtos.TeacherDTO;
+import edu.sharif.cc.dtos.UserDTO;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.models.Problem;
 import edu.sharif.cc.models.Student;
@@ -34,6 +35,10 @@ public class UserService {
 //        this.teacherRepository = teacherRepository;
 //        this.studentRepository = studentRepository;
 //    }
+
+    public void createUser(UserDTO user) {
+
+    }
 
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = teacherRepository.findAll();

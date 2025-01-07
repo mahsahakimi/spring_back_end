@@ -1,6 +1,5 @@
 package edu.sharif.cc.dtos;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
