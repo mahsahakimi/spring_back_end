@@ -37,7 +37,12 @@ public class UserService {
 //    }
 
     public void createUser(UserDTO user) {
+        if (user.getType().equalsIgnoreCase("t")) {
 
+        }
+        else {
+
+        }
     }
 
     public List<TeacherDTO> getAllTeachers() {
@@ -48,10 +53,10 @@ public class UserService {
     }
 
     public TeacherDTO getTeacherByUsername(String username) throws UserNotFoundException {
-        Teacher teacher = teacherRepository.findByUsername(username);
-        if (teacher == null) {
-            throw new UserNotFoundException("Teacher with username '" + username + "' not found.");
-        }
+        Teacher teacher = teacherRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new UserNotFoundException("Teacher not found with username: " + username)
+                );
         return Teacher.toDto(teacher);
     }
 
@@ -64,17 +69,17 @@ public class UserService {
 
     public StudentDTO getStudentByUsername(String username) throws UserNotFoundException {
         Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
-        if (student == null) {
-            throw new UserNotFoundException("Student with username '" + username + "' not found.");
-        }
+                .orElseThrow(
+                        () -> new UserNotFoundException("Student not found with username: " + username)
+                );
         return Student.toDto(student);
     }
 
     public List<ProblemDTO> getSolvedProblemsByStudent(String username) throws UserNotFoundException {
         Student student = studentRepository.findByUsername(username)
                 .orElseThrow(
-                        () -> new UserNotFoundException("User not found with username: " + username));
+                        () -> new UserNotFoundException("Student not found with username: " + username)
+                );
         List<Problem> problems = student.getSolvedProblems();
         return problems.stream()
                 .map((problem) -> Problem.toDto(problem))
