@@ -9,7 +9,7 @@ import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.models.Problem;
 import edu.sharif.cc.models.Student;
 import edu.sharif.cc.models.Teacher;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class UserService {
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
 
-    @Autowired
+    // @Autowired
     public UserService(TeacherRepository teacherRepository, StudentRepository studentRepository) {
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
@@ -68,10 +68,8 @@ public class UserService {
 
     public List<ProblemDTO> getSolvedProblemsByStudent(String username) throws UserNotFoundException {
         Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
-        if (student == null) {
-            throw new UserNotFoundException("Student with username '" + username + "' not found.");
-        }
+                .orElseThrow(
+                        () -> new UserNotFoundException("User not found with username: " + username));
         List<Problem> problems = student.getSolvedProblems();
         return problems.stream()
                 .map((problem) -> Problem.toDto(problem))

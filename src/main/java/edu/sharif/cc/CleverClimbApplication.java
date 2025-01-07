@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CleverClimbApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(CleverClimbApplication.class, args);
 	}
 
