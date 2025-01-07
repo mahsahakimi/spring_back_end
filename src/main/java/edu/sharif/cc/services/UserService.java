@@ -5,11 +5,12 @@ import edu.sharif.cc.Repository.TeacherRepository;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.dtos.StudentDTO;
 import edu.sharif.cc.dtos.TeacherDTO;
+import edu.sharif.cc.dtos.UserDTO;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.models.Problem;
 import edu.sharif.cc.models.Student;
 import edu.sharif.cc.models.Teacher;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class UserService {
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
 
-    @Autowired
+    // @Autowired
     public UserService(TeacherRepository teacherRepository, StudentRepository studentRepository) {
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
@@ -35,6 +36,15 @@ public class UserService {
 //        this.studentRepository = studentRepository;
 //    }
 
+    public void createUser(UserDTO user) {
+        if (user.getType().equalsIgnoreCase("t")) {
+
+        }
+        else {
+
+        }
+    }
+
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = teacherRepository.findAll();
         return teachers.stream()
@@ -43,10 +53,10 @@ public class UserService {
     }
 
     public TeacherDTO getTeacherByUsername(String username) throws UserNotFoundException {
-        Teacher teacher = teacherRepository.findByUsername(username);
-        if (teacher == null) {
-            throw new UserNotFoundException("Teacher with username '" + username + "' not found.");
-        }
+        Teacher teacher = teacherRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new UserNotFoundException("Teacher not found with username: " + username)
+                );
         return Teacher.toDto(teacher);
     }
 
@@ -59,19 +69,17 @@ public class UserService {
 
     public StudentDTO getStudentByUsername(String username) throws UserNotFoundException {
         Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
-        if (student == null) {
-            throw new UserNotFoundException("Student with username '" + username + "' not found.");
-        }
+                .orElseThrow(
+                        () -> new UserNotFoundException("Student not found with username: " + username)
+                );
         return Student.toDto(student);
     }
 
     public List<ProblemDTO> getSolvedProblemsByStudent(String username) throws UserNotFoundException {
         Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
-        if (student == null) {
-            throw new UserNotFoundException("Student with username '" + username + "' not found.");
-        }
+                .orElseThrow(
+                        () -> new UserNotFoundException("Student not found with username: " + username)
+                );
         List<Problem> problems = student.getSolvedProblems();
         return problems.stream()
                 .map((problem) -> Problem.toDto(problem))

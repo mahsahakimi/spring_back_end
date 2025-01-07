@@ -9,7 +9,7 @@ import edu.sharif.cc.exceptions.ProblemNotFoundException;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.models.Problem;
 import edu.sharif.cc.models.Student;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class ProblemService {
     private final ProblemRepository problemRepository;
     private final StudentRepository studentRepository;
 
-    @Autowired
+    // @Autowired
     public ProblemService(ProblemRepository problemRepository, StudentRepository studentRepository) {
         this.problemRepository = problemRepository;
         this.studentRepository = studentRepository;

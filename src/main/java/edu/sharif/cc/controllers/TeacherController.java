@@ -20,12 +20,14 @@ public class TeacherController {
         this.userService = userService;
     }
 
+    // added to front-end @ Teachers.js
     // Get all teachers
     @GetMapping(path = "/teachers")
     public List<TeacherDTO> getAllTeachers() {
         return userService.getAllTeachers();
     }
 
+    // added to front-end @ Profile.js
     // Get a teacher by username
     @GetMapping(path = "/teachers/{username}")
     public TeacherDTO getTeacherByUsername(@PathVariable("username") String username) throws UserNotFoundException {

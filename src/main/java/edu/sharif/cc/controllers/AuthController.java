@@ -1,7 +1,11 @@
 package edu.sharif.cc.controllers;
 
+import edu.sharif.cc.dtos.UserDTO;
+import edu.sharif.cc.exceptions.UserAlreadyExistsException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,10 +19,10 @@ public class AuthController {
     }
 
     // Add a new user (signup)
-//    @PostMapping(path = "/signup")
-//    public UserDto signup(@RequestBody UserDto user) throws UserAlreadyExistsException {
-//        return userService.createUser(user);
-//    }
+    @PostMapping(path = "/signup")
+    public void signup(@RequestBody UserDTO user) throws UserAlreadyExistsException {
+        userService.createUser(user);
+    }
 
     // Login check
 //    @PostMapping("/login")

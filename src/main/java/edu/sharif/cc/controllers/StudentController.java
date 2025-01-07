@@ -17,18 +17,21 @@ public class StudentController {
         this.userService = userService;
     }
 
+    // added to front-end @ Students.js
     // Get all students
     @GetMapping(path = "/students")
     public List<StudentDTO> getAllStudents() {
         return userService.getAllStudents();
     }
 
+    // added to front-end @ Profile.js
     // Get a student by username
     @GetMapping(path = "/students/{username}")
     public StudentDTO getStudentByUsername(@PathVariable("username") String username) throws UserNotFoundException {
         return userService.getStudentByUsername(username);
     }
 
+    // added to front-end @ Problems.js
     // Get a student's solved problems by username
     @GetMapping(path = "/students/{username}/solved")
     public List<ProblemDTO> getSolvedProblemsByStudent(@PathVariable("username") String username) throws UserNotFoundException {
