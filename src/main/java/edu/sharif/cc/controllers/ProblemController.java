@@ -8,6 +8,7 @@ import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.UserService;
 // import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +21,14 @@ public class ProblemController {
     private final ProblemService problemService;
     private final UserService userService;
 
-    //  @Autowired
+    @Autowired
     public ProblemController(ProblemService problemService, UserService userService) {
         this.problemService = problemService;
         this.userService = userService;
     }
 
     // added to front-end @ Problems.js
+    // postman checked
     // Get all problems
     @GetMapping(path = "/problems")
     public List<ProblemDTO> getAllProblems() {
@@ -35,6 +37,7 @@ public class ProblemController {
     }
 
     // added to front-end @ Problems.js
+    // postman checked
     // Get all problems by author
     @GetMapping(path = "/problems/author/{author}")
     public List<ProblemDTO> getProblemsByAuthor(@PathVariable("author") String author) {
@@ -44,7 +47,7 @@ public class ProblemController {
     // added to front-end @ ProblemReaderView.js
     // Get a problem by title
     @GetMapping(path = "/problems/{title}")
-    public ProblemDTO getProblemByTitle(@PathVariable("title") String title) throws ProblemNotFoundException {
+    public ProblemDTO getProblemByTitle(@PathVariable("title") String title) {
         return problemService.getProblemByTitle(title);
     }
 
@@ -64,9 +67,10 @@ public class ProblemController {
     // }
 
     // added to front-end @ Problems.js
+    // postman checked
     // Add a new problem
     @PostMapping(path = "/problems")
-    public void saveProblem(@RequestBody ProblemDTO problem) throws ProblemAlreadyExistsException {
+    public void saveProblem(@RequestBody ProblemDTO problem) {
         problemService.saveProblem(problem);
     }
 

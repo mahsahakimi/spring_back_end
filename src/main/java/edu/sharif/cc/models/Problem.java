@@ -16,12 +16,15 @@ import java.util.List;
 public class Problem {
 
     @Id
-    @SequenceGenerator(name = "problem_id_sequence", sequenceName = "actual_problem_id_sequence", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "problem_id_sequence", sequenceName = "actual_problem_id_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "problem_id_sequence")
     private Long id;
 
     @Column(name = "title", columnDefinition = "TEXT", nullable = false, unique = true)
     private String title;
+
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
+    private String content;
 
     @Column(name = "author", columnDefinition = "TEXT", nullable = false)
     private String author;
@@ -41,26 +44,42 @@ public class Problem {
     @Column(name = "answer", columnDefinition = "TEXT", nullable = false)
     private String answer;
 
+    @Column(name = "difficulty", columnDefinition = "TEXT", nullable = false)
+    private String difficulty;
+
+    @Column(name = "category", columnDefinition = "TEXT", nullable = false)
+    private String category;
+
+    @Transient
+    private Integer solved;
+
+    public Integer getSolved() {
+        return solvedBy.size();
+    }
+
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Student> solvedBy;
 
-    public Problem(String title, String author, String answer, String option1, String option2, String option3, String option4) {
+    public Problem(String title, String content, String option1, String option2, String option3, String option4, String answer, String difficulty, String category, String author, Integer solved) {
         this.title = title;
+        this.content = content;
         this.author = author;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
         this.answer = answer;
+        this.difficulty = difficulty;
+        this.category = category;
+        this.solved = solved;
     }
 
     public static Problem fromDto(ProblemDTO problemDto) {
-        return new Problem(problemDto.getTitle(), problemDto.getAuthor(), problemDto.getAnswer(),
-                problemDto.getOption1(), problemDto.getOption2(), problemDto.getOption3(), problemDto.getOption4());
+        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption_1(), problemDto.getOption_2(), problemDto.getOption_3(), problemDto.getOption_4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getCategory(), problemDto.getAuthor(), Integer.parseInt(problemDto.getSolved()));
+
     }
 
     public static ProblemDTO toDto(Problem problem) {
-        return new ProblemDTO(problem.getTitle(), problem.getAuthor(), problem.getAnswer(),
-                problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4());
+        return new ProblemDTO(problem.getTitle(), problem.getContent(), problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4(), problem.getAnswer(), problem.getDifficulty(), problem.getCategory(), problem.getAuthor(), Integer.toString(problem.getSolved()));
     }
 }

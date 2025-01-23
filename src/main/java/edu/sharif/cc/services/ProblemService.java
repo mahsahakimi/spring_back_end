@@ -55,7 +55,7 @@ public class ProblemService {
 //    }
 //
 
-    public void saveProblem(ProblemDTO problemDto) throws ProblemAlreadyExistsException {
+    public void saveProblem(ProblemDTO problemDto) {
         Problem problem = Problem.fromDto(problemDto);
         if (problemRepository.existsByTitle(problem.getTitle())) {
             throw new ProblemAlreadyExistsException("Problem with title '" + problem.getTitle() + "' already exists.");
