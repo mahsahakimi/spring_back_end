@@ -60,7 +60,7 @@ public class Problem {
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Student> solvedBy;
 
-    public Problem(String title, String content, String option1, String option2, String option3, String option4, String answer, String difficulty, String category, String author, Integer solved) {
+    public Problem(String title, String content, String option1, String option2, String option3, String option4, String answer, String difficulty, String category, String author) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -71,11 +71,10 @@ public class Problem {
         this.answer = answer;
         this.difficulty = difficulty;
         this.category = category;
-        this.solved = solved;
     }
 
     public static Problem fromDto(ProblemDTO problemDto) {
-        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption_1(), problemDto.getOption_2(), problemDto.getOption_3(), problemDto.getOption_4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getCategory(), problemDto.getAuthor(), Integer.parseInt(problemDto.getSolved()));
+        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption_1(), problemDto.getOption_2(), problemDto.getOption_3(), problemDto.getOption_4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getCategory(), problemDto.getAuthor());
 
     }
 

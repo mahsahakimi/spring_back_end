@@ -18,23 +18,32 @@ public class StudentController {
     }
 
     // added to front-end @ Students.js
+    // postman checked
     // Get all students
     @GetMapping(path = "/students")
     public List<StudentDTO> getAllStudents() {
         return userService.getAllStudents();
     }
 
+    // postman checked
+    // Add a new student
+    @PostMapping(path = "/students")
+    public void saveStudent(@RequestBody StudentDTO student) {
+        userService.saveStudent(student);
+    }
+
     // added to front-end @ Profile.js
+    // postman checked
     // Get a student by username
     @GetMapping(path = "/students/{username}")
-    public StudentDTO getStudentByUsername(@PathVariable("username") String username) throws UserNotFoundException {
+    public StudentDTO getStudentByUsername(@PathVariable("username") String username) {
         return userService.getStudentByUsername(username);
     }
 
     // added to front-end @ Problems.js
     // Get a student's solved problems by username
     @GetMapping(path = "/students/{username}/solved")
-    public List<ProblemDTO> getSolvedProblemsByStudent(@PathVariable("username") String username) throws UserNotFoundException {
+    public List<ProblemDTO> getSolvedProblemsByStudent(@PathVariable("username") String username) {
         return userService.getSolvedProblemsByStudent(username);
     }
 

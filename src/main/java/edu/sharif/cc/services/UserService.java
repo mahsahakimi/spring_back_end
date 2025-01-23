@@ -50,7 +50,8 @@ public class UserService {
                 throw new UserAlreadyExistsException("Student with username '" + user.getUsername() + "' already exists.");
             }
             else {
-                Student student = new Student(user.getUsername(), user.getName());
+                Student student = new Student(user.getFollowings(), user.getFollowers(), user.getUsername(), user.getScore(), user.getName());
+
                 studentRepository.save(student);
             }
         }
@@ -60,6 +61,14 @@ public class UserService {
 //    public TokenDTO login() {
 //
 //    };
+
+    public void saveStudent(StudentDTO studentDTO) {
+        Student student = Student.fromDto(studentDTO);
+        if (studentRepository.existsByUsername(student.getUsername())) {
+            throw new UserAlreadyExistsException("Student with username " + student.getUsername() + "' already exists.");
+        }
+        studentRepository.save(student);
+    }
 
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = teacherRepository.findAll();

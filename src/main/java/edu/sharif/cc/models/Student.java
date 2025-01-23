@@ -3,14 +3,17 @@ package edu.sharif.cc.models;
 import edu.sharif.cc.dtos.StudentDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "Student")
 @Table(name = "student")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Student {
     @Id
     @SequenceGenerator(
@@ -26,6 +29,15 @@ public class Student {
     private Long id;
 
     @Column(
+            name = "name",
+            columnDefinition = "TEXT",
+            nullable = false
+    )
+    private String name;
+
+    private String score;
+
+    @Column(
             name = "username",
             columnDefinition = "TEXT",
             nullable = false,
@@ -33,12 +45,21 @@ public class Student {
     )
     private String username;
 
-    @Column(
-            name = "name",
-            columnDefinition = "TEXT",
-            nullable = false
-    )
-    private String name;
+    private String followers;
+
+    private String followings;
+
+    @Transient
+    private List<String> solved;
+
+    public List<String> getSolved() {
+        if (solvedProblems == null) {
+            return List.of();
+        }
+        return solvedProblems.stream()
+                .map((problem -> problem.getTitle()))
+                .collect(Collectors.toList());
+    }
 
     @ManyToMany
     @JoinTable(
@@ -48,20 +69,20 @@ public class Student {
     )
     private List<Problem> solvedProblems;
 
-    public Student() { // for JPA
-    }
-
-    public Student(String username, String name) {
-        this.name = name;
+    public Student(String followings, String followers, String username, String score, String name) {
+        this.followings = followings;
+        this.followers = followers;
         this.username = username;
+        this.score = score;
+        this.name = name;
     }
 
     public static Student fromDto(StudentDTO studentDto) {
-        return new Student(studentDto.getUsername(), studentDto.getName());
+        return new Student(studentDto.getFollowings(), studentDto.getFollowers(), studentDto.getUsername(), studentDto.getScore(), studentDto.getName());
     }
 
     public static StudentDTO toDto(Student student) {
 
-        return new StudentDTO(student.getUsername(), student.getName());
+        return new StudentDTO(student.getSolved(), student.getFollowings(), student.getFollowers(), student.getUsername(), student.getScore(), student.getName());
     }
 }
