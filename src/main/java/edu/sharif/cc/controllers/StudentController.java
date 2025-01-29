@@ -1,56 +1,83 @@
 package edu.sharif.cc.controllers;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.dtos.StudentDTO;
-import edu.sharif.cc.exceptions.UserNotFoundException;
+import edu.sharif.cc.dtos.TeacherDTO;
 import edu.sharif.cc.services.ProblemService;
-import edu.sharif.cc.services.UserService;
+import edu.sharif.cc.services.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
-    private final ProblemService problemService;
-    private final UserService userService;
 
-    public StudentController(ProblemService problemService, UserService userService) {
-        this.problemService = problemService;
-        this.userService = userService;
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    // added to front-end @ Students.js
-    // postman checked
     // Get all students
-    @GetMapping(path = "/students")
+    @GetMapping
     public List<StudentDTO> getAllStudents() {
-        return userService.getAllStudents();
+        return studentService.getAllStudents();
     }
 
-    // postman checked
     // Add a new student
-    @PostMapping(path = "/students")
+    @PostMapping
     public void saveStudent(@RequestBody StudentDTO student) {
-        userService.saveStudent(student);
+        studentService.saveStudent(student);
     }
 
-    // added to front-end @ Profile.js
-    // postman checked
     // Get a student by username
-    @GetMapping(path = "/students/{username}")
+    @GetMapping("/{username}")
     public StudentDTO getStudentByUsername(@PathVariable("username") String username) {
-        return userService.getStudentByUsername(username);
+        return studentService.getStudentByUsername(username);
     }
 
-    // added to front-end @ Problems.js
     // Get a student's solved problems by username
-    @GetMapping(path = "/students/{username}/solved")
+    @GetMapping("/{username}/solved")
     public List<ProblemDTO> getSolvedProblemsByStudent(@PathVariable("username") String username) {
-        return userService.getSolvedProblemsByStudent(username);
+        return studentService.getSolvedProblems(username);
     }
 
     // Add a solved question for a student
-//    @PutMapping("/addsolved")
-//    public ResponseEntity<String> addSolvedProblem(@RequestBody AddSolvedProblemRequest request) {
-//        studentService.addSolvedProblem(request);
-//        return ResponseEntity.ok("Problem added to solved list");
-//    }
+    @PostMapping("/{username}/solved")
+    public ResponseEntity<?> addSolvedProblem(@PathVariable String username, @RequestParam String title) {
+        studentService.addSolvedProblem(username, title);
+        return ResponseEntity.ok().build();
+    }
+
+    // Get a student's followers(students) by username
+    @GetMapping("/{username}/followers")
+    public List<StudentDTO> getFollowers(@PathVariable("username") String username) {
+        return studentService.getFollowers(username);
+    }
+
+    // Get a student's followings(students) by username
+    @GetMapping("/{username}/followings/students")
+    public List<StudentDTO> getFollowingsStudents(@PathVariable("username") String username) {
+        return studentService.getFollowingsStudents(username);
+    }
+
+    // Get a student's followings(teachers) by username
+    @GetMapping("/{username}/followings/teachers")
+    public List<TeacherDTO> getFollowingsTeachers(@PathVariable("username") String username) {
+        return studentService.getFollowingsTeachers(username);
+    }
+
+    @PostMapping("/{username}/follow/student")
+    public ResponseEntity<?> followStudent(@PathVariable String username, @RequestParam String studentUsername) {
+        studentService.followStudent(username, studentUsername);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{username}/follow/teacher")
+    public ResponseEntity<?> followTeacher(@PathVariable String username, @RequestParam String teacherUsername) {
+        studentService.followTeacher(username, teacherUsername);
+        return ResponseEntity.ok().build();
+    }
 }

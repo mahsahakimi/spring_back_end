@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity(name = "Student")
 @Table(name = "student")
@@ -16,50 +15,38 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class Student {
     @Id
-    @SequenceGenerator(
-            name = "student_id_sequence",
-            sequenceName = "actual_student_id_sequence",
-            initialValue = 1,
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_id_sequence"
-    )
+    @SequenceGenerator(name = "student_id_sequence", sequenceName = "actual_student_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_id_sequence")
     private Long id;
 
-    @Column(
-            name = "name",
-            columnDefinition = "TEXT",
-            nullable = false
-    )
-    private String name;
-
-    private String score;
-
-    @Column(
-            name = "username",
-            columnDefinition = "TEXT",
-            nullable = false,
-            unique = true
-    )
+    @Column(name = "username", columnDefinition = "TEXT", nullable = false, unique = true)
     private String username;
 
-    private String followers;
+    @Column(name = "name", columnDefinition = "TEXT", nullable = false)
+    private String name;
 
-    private String followings;
+    @Column(name = "score", columnDefinition = "INTEGER DEFAULT 0")
+    private Integer score;
 
-    @Transient
-    private List<String> solved;
-
-    public List<String> getSolved() {
-        if (solvedProblems == null) {
-            return List.of();
-        }
-        return solvedProblems.stream()
-                .map((problem -> problem.getTitle()))
-                .collect(Collectors.toList());
+    public Integer getScore() {
+        return solvedProblems.size();
     }
+
+    @ManyToMany
+    @JoinTable(
+        name = "student_followers",
+        joinColumns = @JoinColumn(name = "follower_id"),
+        inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private List<Student> followingsStudents;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_teacher_followers",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    private List<Teacher> followingsTeachers;
 
     @ManyToMany
     @JoinTable(
@@ -69,20 +56,17 @@ public class Student {
     )
     private List<Problem> solvedProblems;
 
-    public Student(String followings, String followers, String username, String score, String name) {
-        this.followings = followings;
-        this.followers = followers;
+    public Student(String username, String name) {
         this.username = username;
-        this.score = score;
         this.name = name;
     }
 
     public static Student fromDto(StudentDTO studentDto) {
-        return new Student(studentDto.getFollowings(), studentDto.getFollowers(), studentDto.getUsername(), studentDto.getScore(), studentDto.getName());
+        return new Student(studentDto.getUsername(), studentDto.getName());
     }
 
     public static StudentDTO toDto(Student student) {
 
-        return new StudentDTO(student.getSolved(), student.getFollowings(), student.getFollowers(), student.getUsername(), student.getScore(), student.getName());
+        return new StudentDTO(student.getUsername(), student.getName(), student.getScore());
     }
 }

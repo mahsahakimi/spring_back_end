@@ -6,7 +6,6 @@ import edu.sharif.cc.exceptions.ProblemAlreadyExistsException;
 import edu.sharif.cc.exceptions.ProblemNotFoundException;
 import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
-import edu.sharif.cc.services.UserService;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +18,10 @@ import java.util.List;
 public class ProblemController {
 
     private final ProblemService problemService;
-    private final UserService userService;
 
     @Autowired
-    public ProblemController(ProblemService problemService, UserService userService) {
+    public ProblemController(ProblemService problemService) {
         this.problemService = problemService;
-        this.userService = userService;
     }
 
     // added to front-end @ Problems.js

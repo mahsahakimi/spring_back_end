@@ -26,6 +26,8 @@ public class Problem {
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     @Column(name = "author", columnDefinition = "TEXT", nullable = false)
     private String author;
 

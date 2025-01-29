@@ -1,37 +1,37 @@
 package edu.sharif.cc.controllers;
 
 import edu.sharif.cc.dtos.TeacherDTO;
-import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
-import edu.sharif.cc.services.UserService;
+import edu.sharif.cc.services.TeacherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/teachers")
 public class TeacherController {
+
     private final ProblemService problemService;
-    private final UserService userService;
+    private final TeacherService teacherService;
 
-    public TeacherController(ProblemService problemService, UserService userService) {
+    public TeacherController(ProblemService problemService, TeacherService teacherService) {
         this.problemService = problemService;
-        this.userService = userService;
+        this.teacherService = teacherService;
     }
 
-    // added to front-end @ Teachers.js
     // Get all teachers
-    @GetMapping(path = "/teachers")
+    @GetMapping
     public List<TeacherDTO> getAllTeachers() {
-        return userService.getAllTeachers();
+        return teacherService.getAllTeachers();
     }
 
-    // added to front-end @ Profile.js
     // Get a teacher by username
-    @GetMapping(path = "/teachers/{username}")
-    public TeacherDTO getTeacherByUsername(@PathVariable("username") String username) throws UserNotFoundException {
-        return userService.getTeacherByUsername(username);
+    @GetMapping(path = "/{username}")
+    public TeacherDTO getTeacherByUsername(@PathVariable("username") String username) {
+        return teacherService.getTeacherByUsername(username);
     }
 
 }
