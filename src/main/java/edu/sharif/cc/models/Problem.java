@@ -1,6 +1,7 @@
 package edu.sharif.cc.models;
 
 import edu.sharif.cc.dtos.ProblemDTO;
+import edu.sharif.cc.enums.DifficultyLevel;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -43,44 +44,40 @@ public class Problem {
     @Column(name = "option_4", columnDefinition = "TEXT", nullable = false)
     private String option4;
 
-    @Column(name = "answer", columnDefinition = "TEXT", nullable = false)
-    private String answer;
+    @Column(name = "correct_answer_index", columnDefinition = "INTEGER", nullable = false)
+    private Integer answer;
 
-    @Column(name = "difficulty", columnDefinition = "TEXT", nullable = false)
-    private String difficulty;
+    @Column(name = "difficulty", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private DifficultyLevel difficulty;
 
-    @Column(name = "category", columnDefinition = "TEXT", nullable = false)
-    private String category;
-
-    @Transient
-    private Integer solved;
-
-    public Integer getSolved() {
-        return solvedBy.size();
-    }
+    @ManyToMany(mappedBy = "problems")
+    private List<Category> categories;
 
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Student> solvedBy;
 
-    public Problem(String title, String content, String option1, String option2, String option3, String option4, String answer, String difficulty, String category, String author) {
+    public Problem(String title, String content, String option1, String option2, String option3, String option4, Integer answer, DifficultyLevel difficulty, String author) {
         this.title = title;
         this.content = content;
-        this.author = author;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
         this.answer = answer;
         this.difficulty = difficulty;
-        this.category = category;
+        this.author = author;
+    }
+
+    public boolean isCorrect(Integer answerIndex) {
+        return answer.equals(answerIndex);
     }
 
     public static Problem fromDto(ProblemDTO problemDto) {
-        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption_1(), problemDto.getOption_2(), problemDto.getOption_3(), problemDto.getOption_4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getCategory(), problemDto.getAuthor());
-
+        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption1(), problemDto.getOption2(), problemDto.getOption3(), problemDto.getOption4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getAuthor());
     }
 
     public static ProblemDTO toDto(Problem problem) {
-        return new ProblemDTO(problem.getTitle(), problem.getContent(), problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4(), problem.getAnswer(), problem.getDifficulty(), problem.getCategory(), problem.getAuthor(), Integer.toString(problem.getSolved()));
+        return new ProblemDTO(problem.getTitle(), problem.getContent(), problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4(), problem.getAnswer(), problem.getDifficulty(), problem.getAuthor());
     }
 }

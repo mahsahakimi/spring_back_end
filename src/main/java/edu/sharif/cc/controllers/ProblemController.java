@@ -1,14 +1,14 @@
 package edu.sharif.cc.controllers;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.services.ProblemService;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api/v1")
+@RequestMapping("/problems")
 public class ProblemController {
 
     private final ProblemService problemService;
@@ -18,59 +18,70 @@ public class ProblemController {
         this.problemService = problemService;
     }
 
-    // added to front-end @ Problems.js
-    // postman checked
     // Get all problems
-    @GetMapping(path = "/problems")
+    @GetMapping
     public List<ProblemDTO> getAllProblems() {
-
         return problemService.getAllProblems();
     }
 
-    // added to front-end @ Problems.js
-    // postman checked
     // Get all problems by author
-    @GetMapping(path = "/problems/author/{author}")
-    public List<ProblemDTO> getProblemsByAuthor(@PathVariable("author") String author) {
+    @GetMapping
+    public List<ProblemDTO> getProblemsByAuthor(@RequestParam String author) {
         return problemService.getProblemsByAuthor(author);
     }
 
-    // added to front-end @ ProblemReaderView.js
     // Get a problem by title
-    @GetMapping(path = "/problems/{title}")
+    @GetMapping("/{title}")
     public ProblemDTO getProblemByTitle(@PathVariable("title") String title) {
         return problemService.getProblemByTitle(title);
     }
 
-    // @ Problems.js
-    // PATH CHANGED!!!!
-    // /problems/checkproblem/:username
-    // Check problem answer
-    // @PostMapping("/problems/check/{username}")
-    // public ResponseEntity<String> checkProblemAnswer(@PathVariable("username") String username, @RequestBody CheckAnswerRequest request) throws ProblemNotFoundException, UserNotFoundException {
-    //     boolean isCorrect = problemService.checkProblemAnswer(username, request);
-
-    //     if (isCorrect) {
-    //         return ResponseEntity.ok("Correct answer!");
-    //     } else {
-    //         return ResponseEntity.ok("Incorrect answer. Try again.");
-    //     }
-    // }
-
-    // added to front-end @ Problems.js
-    // postman checked
     // Add a new problem
-    @PostMapping(path = "/problems")
+    @PostMapping
     public void saveProblem(@RequestBody ProblemDTO problem) {
         problemService.saveProblem(problem);
     }
 
-    // Update a problem
-//    @PutMapping("/updateproblem/{title}")
-//    public ResponseEntity<Problem> updateProblem(
-//            @PathVariable String title,
-//            @RequestBody UpdateProblemRequest updateRequest) {
-//        Problem updatedProblem = problemService.updateProblem(title, updateRequest);
-//        return ResponseEntity.ok(updatedProblem);
-//    }
+    // Get all categories names
+    @GetMapping
+    public List<String> getAllCategories() {
+        return problemService.getAllCategories();
+    }
+
+    // Add a new category
+    @PostMapping("/category")
+    public void saveCategory(@RequestParam String name) {
+        problemService.saveCategory(name);
+    }
+
+    // Add a category to a problem
+    @PostMapping("/{title}/category")
+    public ResponseEntity<?> addCategoryToProblem(@PathVariable String title, @RequestParam String categoryName) {
+        problemService.addCategoryToProblem(title, categoryName);
+        return ResponseEntity.ok().build();
+    }
+
+    // Get all categories of a problem by title
+    @GetMapping(path = "/{title}/category")
+    public List<String> getAllCategoriesByTitle(@PathVariable String title) {
+        return problemService.getAllCategoriesByTitle(title);
+    }
+
+    // Get all problems of a categories by categoryName
+    @GetMapping(path = "/category/{categoryName}")
+    public List<ProblemDTO> getAllProblemsByCategoryName(@PathVariable String categoryName) {
+        return problemService.getAllProblemsByCategoryName(categoryName);
+    }
+
+    // Remove a category from a problem
+    @DeleteMapping("/{title}/category")
+    public ResponseEntity<?> removeCategoryFromProblem(@PathVariable String title, @RequestParam String categoryName) {
+        problemService.removeCategoryFromProblem(title, categoryName);
+        return ResponseEntity.ok().build();
+    }
+
+    // Check problem answer
+    @GetMapping("/{title}/check")
+    public boolean checkAnswer(@PathVariable String title, @RequestParam Integer answerIndex) {
+        return problemService.checkAnswer(title, answerIndex);
 }

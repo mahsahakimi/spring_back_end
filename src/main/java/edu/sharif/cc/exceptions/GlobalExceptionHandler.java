@@ -19,6 +19,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<String> handleCategoryNotFound(CategoryNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     // 409 Conflict
     @ExceptionHandler(ProblemAlreadyExistsException.class)
     public ResponseEntity<String> handleProblemAlreadyExists(ProblemAlreadyExistsException ex) {
@@ -37,6 +42,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyFollowsException.class)
     public ResponseEntity<String> handleUserAlreadyFollows(UserAlreadyFollowsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(CategoryAlreadyExistsException.class)
+    public ResponseEntity<String> handlecategoryAlreadyExists(CategoryAlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
