@@ -1,12 +1,12 @@
 package edu.sharif.cc.controllers;
 
+import edu.sharif.cc.dtos.ProblemDTO;
+import edu.sharif.cc.dtos.StudentDTO;
 import edu.sharif.cc.dtos.TeacherDTO;
 import edu.sharif.cc.services.ProblemService;
 import edu.sharif.cc.services.TeacherService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +22,12 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
+    // Add a new teacher
+    @PostMapping
+    public void saveTeacher(@RequestBody TeacherDTO teacher) {
+        teacherService.saveTeacher(teacher);
+    }
+
     // Get all teachers
     @GetMapping
     public List<TeacherDTO> getAllTeachers() {
@@ -34,4 +40,35 @@ public class TeacherController {
         return teacherService.getTeacherByUsername(username);
     }
 
+    // Get a teacher's created problems by username
+    @GetMapping("/{username}/created")
+    public List<ProblemDTO> getCreatedProblemsByTeacher(@PathVariable("username") String username) {
+        return teacherService.getCreatedProblems(username);
+    }
+
+    // Get a teacher's followers(students) by username
+    @GetMapping("/{username}/followers")
+    public List<StudentDTO> getFollowers(@PathVariable("username") String username) {
+        return teacherService.getFollowers(username);
+    }
+
+    // Add a created question for a teacher
+    @PostMapping("/{username}/created")
+    public ResponseEntity<?> addCreatedProblem(@PathVariable String username, @RequestParam String title) {
+        teacherService.addCreatedProblem(username, title);
+        return ResponseEntity.ok().build();
+    }
+
+    // Get a teacher's followings(teacher) by username
+    @GetMapping("/{username}/followings")
+    public List<TeacherDTO> getFollowings(@PathVariable("username") String username) {
+        return teacherService.getFollowings(username);
+    }
+
+    // Add a teacher to followings by username
+    @PostMapping("/{username}/follow")
+    public ResponseEntity<?> followTeacher(@PathVariable String username, @RequestParam String teacherUsername) {
+        teacherService.followTeacher(username, teacherUsername);
+        return ResponseEntity.ok().build();
+    }
 }

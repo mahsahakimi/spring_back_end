@@ -69,12 +69,14 @@ public class StudentController {
         return studentService.getFollowingsTeachers(username);
     }
 
+    // Add a student to student's followings by username
     @PostMapping("/{username}/follow/student")
     public ResponseEntity<?> followStudent(@PathVariable String username, @RequestParam String studentUsername) {
         studentService.followStudent(username, studentUsername);
         return ResponseEntity.ok().build();
     }
 
+    // Add a teacher to student's followings by username
     @PostMapping("/{username}/follow/teacher")
     public ResponseEntity<?> followTeacher(@PathVariable String username, @RequestParam String teacherUsername) {
         studentService.followTeacher(username, teacherUsername);

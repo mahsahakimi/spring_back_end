@@ -1,14 +1,8 @@
 package edu.sharif.cc.controllers;
-
-import edu.sharif.cc.dtos.CheckAnswerRequest;
 import edu.sharif.cc.dtos.ProblemDTO;
-import edu.sharif.cc.exceptions.ProblemAlreadyExistsException;
-import edu.sharif.cc.exceptions.ProblemNotFoundException;
-import edu.sharif.cc.exceptions.UserNotFoundException;
 import edu.sharif.cc.services.ProblemService;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

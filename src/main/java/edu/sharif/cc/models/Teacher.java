@@ -35,6 +35,13 @@ public class Teacher {
     @OneToMany(mappedBy = "author")
     private List<Problem> createdProblems;
 
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_followers",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private List<Teacher> followingsTeachers;
 
     public Teacher(String username, String name) {
         this.name = name;
