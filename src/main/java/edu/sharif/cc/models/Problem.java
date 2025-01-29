@@ -27,10 +27,12 @@ public class Problem {
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
     @Column(name = "author", columnDefinition = "TEXT", nullable = false)
     private String author;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
     @Column(name = "option_1", columnDefinition = "TEXT", nullable = false)
     private String option1;

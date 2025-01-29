@@ -84,4 +84,5 @@ public class ProblemController {
     @GetMapping("/{title}/check")
     public boolean checkAnswer(@PathVariable String title, @RequestParam Integer answerIndex) {
         return problemService.checkAnswer(title, answerIndex);
+    }
 }

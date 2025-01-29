@@ -3,15 +3,12 @@ package edu.sharif.cc.services;
 import edu.sharif.cc.Repository.CategoryRepository;
 import edu.sharif.cc.Repository.ProblemRepository;
 import edu.sharif.cc.Repository.StudentRepository;
-import edu.sharif.cc.dtos.CheckAnswerRequest;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.exceptions.*;
 import edu.sharif.cc.models.Category;
 import edu.sharif.cc.models.Problem;
-import edu.sharif.cc.models.Student;
-// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +20,7 @@ public class ProblemService {
     private final StudentRepository studentRepository;
     private final CategoryRepository categoryRepository;
 
-    // @Autowired
+     @Autowired
     public ProblemService(ProblemRepository problemRepository, StudentRepository studentRepository,  CategoryRepository categoryRepository) {
         this.problemRepository = problemRepository;
         this.studentRepository = studentRepository;
@@ -120,42 +117,5 @@ public class ProblemService {
                 .orElseThrow(() -> new ProblemNotFoundException("Problem with title '" + title + "' not found."));
 
         return problem.isCorrect(answerIndex);
-    }
-
-
-
-//    public void checkProblemAnswer(String username, CheckAnswerRequest request) throws ProblemNotFoundException, UserNotFoundException {
-//        // Implement logic to check the answer using username, request data
-//        // Throw exceptions if necessary
-//    }
-//
-
-
-
-
-
-    public boolean checkProblemAnswer(String username, CheckAnswerRequest request)
-            throws ProblemNotFoundException, UserNotFoundException {
-
-        // Check if the student exists
-        Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
-
-        // Check if the problem exists
-        Problem problem = problemRepository.findByTitle(request.getProblemTitle())
-                .orElseThrow(() -> new ProblemNotFoundException("Problem not found with title: " + request.getProblemTitle()));
-
-        // Validate the answer
-//        boolean isCorrect = problem.getAnswer().equalsIgnoreCase(request.getAnswer());
-
-        // If correct, update the student's solved problems
-//        if (isCorrect) {
-//            if (!student.getSolved().contains(problem.getTitle())) {
-//                student.getSolved().add(problem.getTitle());
-//                StudentRepository.save(student); // Persist the changes
-//            }
-//        }
-
-//        return isCorrect;
     }
 }

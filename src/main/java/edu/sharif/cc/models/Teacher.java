@@ -32,16 +32,19 @@ public class Teacher {
         return createdProblems.size();
     }
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "teacher")
     private List<Problem> createdProblems;
 
     @ManyToMany
     @JoinTable(
-            name = "teacher_followers",
+            name = "teacher_teacher_followers",
             joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_id")
     )
     private List<Teacher> followingsTeachers;
+
+    @ManyToMany(mappedBy = "followingsTeachers")
+    private List<Teacher> followersTeachers;
 
     public Teacher(String username, String name) {
         this.name = name;
