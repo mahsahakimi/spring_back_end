@@ -59,11 +59,19 @@ public class TeacherService {
                 .collect(Collectors.toList());
     }
 
-    public List<StudentDTO> getFollowers(String username) {
+    public List<StudentDTO> getFollowersStudents(String username) {
         Teacher teacher = teacherRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));
         return studentRepository.findByFollowingsTeachersContaining(teacher).stream()
                 .map((s) -> Student.toDto(s))
+                .collect(Collectors.toList());
+    }
+
+    public List<TeacherDTO> getFollowersTeachers(String username) {
+        Teacher teacher = teacherRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));
+        return teacher.getFollowersTeachers().stream()
+                .map((t) -> Teacher.toDto(t))
                 .collect(Collectors.toList());
     }
 
@@ -101,7 +109,9 @@ public class TeacherService {
             throw new UserAlreadyFollowsException("Teacher already follows this teacher");
         }
 
-        teacher.getFollowingsTeachers().add(otherTeacher);
-        teacherRepository.save(teacher);
+        if (!username.equals(otherTeacherUsername)) {
+            teacher.getFollowingsTeachers().add(otherTeacher);
+            teacherRepository.save(teacher);
+        }
     }
 }

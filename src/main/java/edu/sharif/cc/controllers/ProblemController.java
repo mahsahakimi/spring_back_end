@@ -24,11 +24,11 @@ public class ProblemController {
         return problemService.getAllProblems();
     }
 
-    // Get all problems by author
-    @GetMapping
-    public List<ProblemDTO> getProblemsByAuthor(@RequestParam String author) {
-        return problemService.getProblemsByAuthor(author);
-    }
+     // Get all problems by author
+     @GetMapping("/author/{author}")
+     public List<ProblemDTO> getProblemsByAuthor(@PathVariable("author") String teacherUsername) {
+         return problemService.getProblemsByAuthor(teacherUsername);
+     }
 
     // Get a problem by title
     @GetMapping("/{title}")
@@ -43,7 +43,7 @@ public class ProblemController {
     }
 
     // Get all categories names
-    @GetMapping
+    @GetMapping("/category")
     public List<String> getAllCategories() {
         return problemService.getAllCategories();
     }

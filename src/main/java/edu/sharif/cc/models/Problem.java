@@ -53,7 +53,7 @@ public class Problem {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficulty;
 
-    @ManyToMany(mappedBy = "problems")
+    @ManyToMany(mappedBy = "problems", cascade = CascadeType.ALL)
     private List<Category> categories;
 
     @ManyToMany(mappedBy = "solvedProblems")

@@ -86,8 +86,10 @@ public class StudentService {
             throw new UserAlreadyFollowsException("Student already follows this student");
         }
 
-        student.getFollowingsStudents().add(otherStudent);
-        studentRepository.save(student);
+        if (!username.equals(otherStudentUsername)) {
+            student.getFollowingsStudents().add(otherStudent);
+            studentRepository.save(student);
+        }
     }
 
     public void followTeacher(String username, String teacherUsername) {

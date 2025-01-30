@@ -41,8 +41,8 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProblemDTO> getProblemsByAuthor(String author) {
-        List<Problem> problems = problemRepository.findByAuthor(author);
+    public List<ProblemDTO> getProblemsByAuthor(String teacherUsername) {
+        List<Problem> problems = problemRepository.findAllByAuthor(teacherUsername);
         return problems.stream()
                 .map(problem -> Problem.toDto(problem))
                 .collect(Collectors.toList());

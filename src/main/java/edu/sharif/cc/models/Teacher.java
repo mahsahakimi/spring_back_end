@@ -25,7 +25,7 @@ public class Teacher {
     @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     private String name;
 
-    @Column(name = "created", columnDefinition = "INTEGER DEFAULT 0")
+    @Transient
     private Integer created;
 
     public Integer getCreated() {

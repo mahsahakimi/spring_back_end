@@ -15,8 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProblemDTO {
 
-//    private Long id;
-    private Long id;
+    // private Long id;
     private String title;
     private String content;
     private String author;

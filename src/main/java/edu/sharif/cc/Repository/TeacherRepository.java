@@ -14,4 +14,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> { // Lon
     Optional<Teacher> findByUsername(String username);
 
     boolean existsByUsername(String username);
+    
+    List<Teacher> findByFollowingsTeachersContaining(Teacher teacher);
 }
