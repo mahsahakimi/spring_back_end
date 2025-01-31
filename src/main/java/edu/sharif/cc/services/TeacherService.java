@@ -75,21 +75,6 @@ public class TeacherService {
                 .collect(Collectors.toList());
     }
 
-    public void addCreatedProblem(String username, String title) {
-        Teacher teacher = teacherRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));
-
-        Problem problem = problemRepository.findByTitle(title)
-                .orElseThrow(() -> new ProblemNotFoundException("Problem not found with title: " + title));
-
-        if (problemRepository.existsByTitle(title)) {
-            throw new ProblemAlreadyExistsException("Problem already created");
-        }
-
-        teacher.getCreatedProblems().add(problem);
-        teacherRepository.save(teacher);
-    }
-
     public List<TeacherDTO> getFollowings(String username) {
         Teacher teacher = teacherRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));

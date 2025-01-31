@@ -32,7 +32,7 @@ public class Teacher {
         return createdProblems.size();
     }
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Problem> createdProblems;
 
     @ManyToMany

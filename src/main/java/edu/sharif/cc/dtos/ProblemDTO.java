@@ -1,9 +1,6 @@
 package edu.sharif.cc.dtos;
 
 import edu.sharif.cc.enums.DifficultyLevel;
-import edu.sharif.cc.models.Category;
-import edu.sharif.cc.models.Student;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +15,6 @@ public class ProblemDTO {
     // private Long id;
     private String title;
     private String content;
-    private String author;
     private String option1;
     private String option2;
     private String option3;
@@ -26,7 +22,7 @@ public class ProblemDTO {
     private Integer answer;
     private DifficultyLevel difficulty;
 
-    public ProblemDTO(String title, String content, String option1, String option2, String option3, String option4, Integer answer, DifficultyLevel difficulty, String author) {
+    public ProblemDTO(String title, String content, String option1, String option2, String option3, String option4, Integer answer, DifficultyLevel difficulty) {
         this.title = title;
         this.content = content;
         this.option1 = option1;
@@ -35,6 +31,5 @@ public class ProblemDTO {
         this.option4 = option4;
         this.answer = answer;
         this.difficulty = difficulty;
-        this.author = author;
     }
 }

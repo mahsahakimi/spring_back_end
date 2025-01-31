@@ -15,7 +15,4 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     Optional<Problem> findByTitle(String title);
 
     boolean existsByTitle(String title);
-
-    @Query(value = "SELECT p FROM Problem p WHERE p.author = ?1")
-    List<Problem> findAllByAuthor(String author);
 }

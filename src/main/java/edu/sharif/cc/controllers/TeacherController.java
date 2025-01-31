@@ -58,13 +58,6 @@ public class TeacherController {
         return teacherService.getFollowersTeachers(username);
     }
 
-    // Add a created question for a teacher
-    @PostMapping("/{username}/created")
-    public ResponseEntity<?> addCreatedProblem(@PathVariable String username, @RequestParam String title) {
-        teacherService.addCreatedProblem(username, title);
-        return ResponseEntity.ok().build();
-    }
-
     // Get a teacher's followings(teacher) by username
     @GetMapping("/{username}/followings")
     public List<TeacherDTO> getFollowings(@PathVariable("username") String username) {

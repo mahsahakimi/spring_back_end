@@ -1,15 +1,15 @@
-package edu.sharif.cc.controllers;
+// package edu.sharif.cc.controllers;
 
-import edu.sharif.cc.services.ProblemService;
-import org.springframework.web.bind.annotation.RestController;
+// import edu.sharif.cc.services.ProblemService;
+// import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class AuthController {
-    private final ProblemService problemService;
+// @RestController
+// public class AuthController {
+//     private final ProblemService problemService;
 
-    public AuthController(ProblemService problemService) {
-        this.problemService = problemService;
-    }
+//     public AuthController(ProblemService problemService) {
+//         this.problemService = problemService;
+//     }
 
 //     Signup
 //     @PostMapping(path = "/signup")
@@ -21,4 +21,4 @@ public class AuthController {
 //    @PostMapping("/login")
 //    }
 
-}
+// }

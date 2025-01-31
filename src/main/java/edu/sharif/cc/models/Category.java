@@ -22,12 +22,7 @@ public class Category {
     @Column(name = "name", columnDefinition = "TEXT", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "category_problems",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "problem_id")
-    )
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Problem> problems;
 
     public Category(String name) {
