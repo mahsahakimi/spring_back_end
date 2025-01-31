@@ -24,11 +24,11 @@ public class ProblemController {
         return problemService.getAllProblems();
     }
 
-    // Get all problems by author
-    @GetMapping
-    public List<ProblemDTO> getProblemsByAuthor(@RequestParam String author) {
-        return problemService.getProblemsByAuthor(author);
-    }
+     // Get all problems by author
+     @GetMapping("/author/{author}")
+     public List<ProblemDTO> getProblemsByAuthor(@PathVariable("author") String teacherUsername) {
+         return problemService.getProblemsByAuthor(teacherUsername);
+     }
 
     // Get a problem by title
     @GetMapping("/{title}")
@@ -43,7 +43,7 @@ public class ProblemController {
     }
 
     // Get all categories names
-    @GetMapping
+    @GetMapping("/category")
     public List<String> getAllCategories() {
         return problemService.getAllCategories();
     }
@@ -54,17 +54,24 @@ public class ProblemController {
         problemService.saveCategory(name);
     }
 
-    // Add a category to a problem
+    // Check problem answer
+    @GetMapping("/{title}/check")
+    public boolean checkAnswer(@PathVariable String title, @RequestParam Integer answerIndex) {
+        return problemService.checkAnswer(title, answerIndex);
+    }
+//-------
+    // Set a author for a problem
+    @PostMapping("/{title}/author")
+    public ResponseEntity<?> addTeacherToProblem(@PathVariable String title, @RequestParam String teacherUsername) {
+        problemService.addTeacherToProblem(title, teacherUsername);
+        return ResponseEntity.ok().build();
+    }
+
+    // Set a category to a problem
     @PostMapping("/{title}/category")
     public ResponseEntity<?> addCategoryToProblem(@PathVariable String title, @RequestParam String categoryName) {
         problemService.addCategoryToProblem(title, categoryName);
         return ResponseEntity.ok().build();
-    }
-
-    // Get all categories of a problem by title
-    @GetMapping(path = "/{title}/category")
-    public List<String> getAllCategoriesByTitle(@PathVariable String title) {
-        return problemService.getAllCategoriesByTitle(title);
     }
 
     // Get all problems of a categories by categoryName
@@ -73,16 +80,9 @@ public class ProblemController {
         return problemService.getAllProblemsByCategoryName(categoryName);
     }
 
-    // Remove a category from a problem
-    @DeleteMapping("/{title}/category")
-    public ResponseEntity<?> removeCategoryFromProblem(@PathVariable String title, @RequestParam String categoryName) {
-        problemService.removeCategoryFromProblem(title, categoryName);
-        return ResponseEntity.ok().build();
-    }
-
-    // Check problem answer
-    @GetMapping("/{title}/check")
-    public boolean checkAnswer(@PathVariable String title, @RequestParam Integer answerIndex) {
-        return problemService.checkAnswer(title, answerIndex);
+    // Get category of a problem by title
+    @GetMapping(path = "/{title}/category")
+    public String getCategoryByTitle(@PathVariable String title) {
+        return problemService.getCategoryByTitle(title);
     }
 }

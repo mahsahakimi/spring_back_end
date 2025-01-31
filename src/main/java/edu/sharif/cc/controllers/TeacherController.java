@@ -47,22 +47,21 @@ public class TeacherController {
     }
 
     // Get a teacher's followers(students) by username
-    @GetMapping("/{username}/followers")
-    public List<StudentDTO> getFollowers(@PathVariable("username") String username) {
-        return teacherService.getFollowers(username);
+    @GetMapping("/{username}/followers/students")
+    public List<StudentDTO> getFollowersStudents(@PathVariable("username") String username) {
+        return teacherService.getFollowersStudents(username);
     }
 
-    // Add a created question for a teacher
-    @PostMapping("/{username}/created")
-    public ResponseEntity<?> addCreatedProblem(@PathVariable String username, @RequestParam String title) {
-        teacherService.addCreatedProblem(username, title);
-        return ResponseEntity.ok().build();
+    // Get a teacher's followers(teachers) by username
+    @GetMapping("/{username}/followers/teachers")
+    public List<TeacherDTO> getFollowers(@PathVariable("username") String username) {
+        return teacherService.getFollowersTeachers(username);
     }
 
     // Get a teacher's followings(teacher) by username
     @GetMapping("/{username}/followings")
     public List<TeacherDTO> getFollowings(@PathVariable("username") String username) {
-        return teacherService.getFollowings(username);
+    return teacherService.getFollowings(username);
     }
 
     // Add a teacher to followings by username

@@ -3,10 +3,12 @@ package edu.sharif.cc.services;
 import edu.sharif.cc.Repository.CategoryRepository;
 import edu.sharif.cc.Repository.ProblemRepository;
 import edu.sharif.cc.Repository.StudentRepository;
+import edu.sharif.cc.Repository.TeacherRepository;
 import edu.sharif.cc.dtos.ProblemDTO;
 import edu.sharif.cc.exceptions.*;
 import edu.sharif.cc.models.Category;
 import edu.sharif.cc.models.Problem;
+import edu.sharif.cc.models.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,14 @@ public class ProblemService {
     private final ProblemRepository problemRepository;
     private final StudentRepository studentRepository;
     private final CategoryRepository categoryRepository;
+    private final TeacherRepository teacherRepository;
 
      @Autowired
-    public ProblemService(ProblemRepository problemRepository, StudentRepository studentRepository,  CategoryRepository categoryRepository) {
+    public ProblemService(ProblemRepository problemRepository, StudentRepository studentRepository,  CategoryRepository categoryRepository, TeacherRepository teacherRepository) {
         this.problemRepository = problemRepository;
         this.studentRepository = studentRepository;
         this.categoryRepository = categoryRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     public List<ProblemDTO> getAllProblems() {
@@ -41,19 +45,18 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProblemDTO> getProblemsByAuthor(String author) {
-        List<Problem> problems = problemRepository.findByAuthor(author);
-        return problems.stream()
+    public List<ProblemDTO> getProblemsByAuthor(String teacherUsername) {
+        Teacher teacher = teacherRepository.findByUsername(teacherUsername)
+                .orElseThrow(() -> new UserNotFoundException("Teacher with name '" + teacherUsername + "' not found."));
+        return teacher.getCreatedProblems().stream()
                 .map(problem -> Problem.toDto(problem))
                 .collect(Collectors.toList());
     }
 
-    public List<String> getAllCategoriesByTitle(String title) {
+    public String getCategoryByTitle(String title) {
         Problem problem = problemRepository.findByTitle(title)
                 .orElseThrow(() -> new ProblemNotFoundException("Problem with title '" + title + "' not found."));
-        return problem.getCategories().stream()
-                .map(category -> category.getName())
-                .collect(Collectors.toList());
+        return problem.getCategory().getName();
     }
 
     public List<ProblemDTO> getAllProblemsByCategoryName(String categoryName) {
@@ -93,23 +96,19 @@ public class ProblemService {
         Category category = categoryRepository.findByName(categoryName)
                 .orElseThrow(() -> new CategoryNotFoundException("Category with name '" + categoryName + "' not found."));
 
-        if (!(problem.getCategories().contains(category))) {
-            problem.getCategories().add(category);
-            problemRepository.save(problem);
-        }
+        problem.setCategory(category);
+        problemRepository.save(problem);
     }
 
-    public void removeCategoryFromProblem(String title, String categoryName) {
+    public void addTeacherToProblem(String title, String teacherUserName) {
         Problem problem = problemRepository.findByTitle(title)
                 .orElseThrow(() -> new ProblemNotFoundException("Problem with title '" + title + "' not found."));
 
-        Category category = categoryRepository.findByName(categoryName)
-                .orElseThrow(() -> new CategoryNotFoundException("Category with name '" + categoryName + "' not found."));
+        Teacher teacher = teacherRepository.findByUsername(teacherUserName)
+                .orElseThrow(() -> new UserNotFoundException("Teacher with name '" + teacherUserName + "' not found."));
 
-        if (problem.getCategories().contains(category)) {
-            problem.getCategories().remove(category);
-            problemRepository.save(problem);
-        }
+        problem.setTeacher(teacher);
+        problemRepository.save(problem);
     }
 
     public boolean checkAnswer(String title, Integer answerIndex) {

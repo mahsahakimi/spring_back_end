@@ -27,9 +27,6 @@ public class Problem {
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "author", columnDefinition = "TEXT", nullable = false)
-    private String author;
-
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
@@ -53,13 +50,14 @@ public class Problem {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficulty;
 
-    @ManyToMany(mappedBy = "problems")
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Student> solvedBy;
 
-    public Problem(String title, String content, String option1, String option2, String option3, String option4, Integer answer, DifficultyLevel difficulty, String author) {
+    public Problem(String title, String content, String option1, String option2, String option3, String option4, Integer answer, DifficultyLevel difficulty) {
         this.title = title;
         this.content = content;
         this.option1 = option1;
@@ -68,7 +66,6 @@ public class Problem {
         this.option4 = option4;
         this.answer = answer;
         this.difficulty = difficulty;
-        this.author = author;
     }
 
     public boolean isCorrect(Integer answerIndex) {
@@ -76,10 +73,10 @@ public class Problem {
     }
 
     public static Problem fromDto(ProblemDTO problemDto) {
-        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption1(), problemDto.getOption2(), problemDto.getOption3(), problemDto.getOption4(), problemDto.getAnswer(), problemDto.getDifficulty(), problemDto.getAuthor());
+        return new Problem(problemDto.getTitle(), problemDto.getContent(), problemDto.getOption1(), problemDto.getOption2(), problemDto.getOption3(), problemDto.getOption4(), problemDto.getAnswer(), problemDto.getDifficulty());
     }
 
     public static ProblemDTO toDto(Problem problem) {
-        return new ProblemDTO(problem.getTitle(), problem.getContent(), problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4(), problem.getAnswer(), problem.getDifficulty(), problem.getAuthor());
+        return new ProblemDTO(problem.getTitle(), problem.getContent(), problem.getOption1(), problem.getOption2(), problem.getOption3(), problem.getOption4(), problem.getAnswer(), problem.getDifficulty());
     }
 }

@@ -28,14 +28,14 @@ public class Teacher {
     @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     private String name;
 
-    @Column(name = "created", columnDefinition = "INTEGER DEFAULT 0")
+    @Transient
     private Integer created;
 
     public Integer getCreated() {
         return createdProblems.size();
     }
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Problem> createdProblems;
 
     @ManyToMany

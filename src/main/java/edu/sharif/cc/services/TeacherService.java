@@ -59,7 +59,7 @@ public class TeacherService {
                 .collect(Collectors.toList());
     }
 
-    public List<StudentDTO> getFollowers(String username) {
+    public List<StudentDTO> getFollowersStudents(String username) {
         Teacher teacher = teacherRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));
         return studentRepository.findByFollowingsTeachersContaining(teacher).stream()
@@ -67,19 +67,12 @@ public class TeacherService {
                 .collect(Collectors.toList());
     }
 
-    public void addCreatedProblem(String username, String title) {
+    public List<TeacherDTO> getFollowersTeachers(String username) {
         Teacher teacher = teacherRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found with username: " + username));
-
-        Problem problem = problemRepository.findByTitle(title)
-                .orElseThrow(() -> new ProblemNotFoundException("Problem not found with title: " + title));
-
-        if (problemRepository.existsByTitle(title)) {
-            throw new ProblemAlreadyExistsException("Problem already created");
-        }
-
-        teacher.getCreatedProblems().add(problem);
-        teacherRepository.save(teacher);
+        return teacher.getFollowersTeachers().stream()
+                .map((t) -> Teacher.toDto(t))
+                .collect(Collectors.toList());
     }
 
     public List<TeacherDTO> getFollowings(String username) {
@@ -101,7 +94,9 @@ public class TeacherService {
             throw new UserAlreadyFollowsException("Teacher already follows this teacher");
         }
 
-        teacher.getFollowingsTeachers().add(otherTeacher);
-        teacherRepository.save(teacher);
+        if (!username.equals(otherTeacherUsername)) {
+            teacher.getFollowingsTeachers().add(otherTeacher);
+            teacherRepository.save(teacher);
+        }
     }
 }

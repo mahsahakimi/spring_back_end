@@ -1,0 +1,641 @@
+{
+	"info": {
+		"_postman_id": "d7c9ca9b-37ef-42f3-a9a7-f708c97bdb3f",
+		"name": "CleverClimb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39478336"
+	},
+	"item": [
+		{
+			"name": "Add a new teacher",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"name\": \"ali\",\n        \"username\": \"ali123\"\n    }\n    //  {\n    //     \"name\": \"mmd\",\n    //     \"username\": \"mmd123\"\n    // }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/teachers"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all teachers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a teacher by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers/ali123"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a teacher's created problems by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers/ali123/created"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a teacher's followers(students) by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers/ali123/followers/students"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a teacher's followers(teachers) by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers/mmd123/followers/teachers"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a teacher's followings(teacher) by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/teachers/ali123/followings"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a teacher to followings by username",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/teachers/ali123/follow?teacherUsername=mmd123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"teachers",
+						"ali123",
+						"follow"
+					],
+					"query": [
+						{
+							"key": "teacherUsername",
+							"value": "mmd123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/students"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"sara\",\n\"username\": \"sara123\"\n}\n// {\n// \"name\": \"neda\",\n// \"username\": \"neda123\"\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student by username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/sara123"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student's solved problems by username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/sara123/solved"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a solved question for a student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/students/sara123/solved?title=add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"sara123",
+						"solved"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student's followers(students) by username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/neda123/followers"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student's followings(students) by username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/sara123/followings/students"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student's followings(teachers) by username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/students/sara123/followings/teachers"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a student to student's followings by username",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/students/sara123/follow/student?studentUsername=neda123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"sara123",
+						"follow",
+						"student"
+					],
+					"query": [
+						{
+							"key": "studentUsername",
+							"value": "neda123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a teacher to student's followings by username",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/students/sara123/follow/teacher?teacherUsername=ali123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"sara123",
+						"follow",
+						"teacher"
+					],
+					"query": [
+						{
+							"key": "teacherUsername",
+							"value": "ali123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all problems",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all problems by author",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems/author/ali123"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a problem by title",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"add\",\n    \"content\": \"2+4\",\n    \"option1\": \"1\",\n    \"option2\": \"3\",\n    \"option3\": \"4\",\n    \"option4\": \"6\",\n    \"answer\": \"4\",\n    \"difficulty\": \"HARD\"\n}\n// {\n//     \"title\": \"shoot\",\n//     \"content\": \"Who is the best player?\",\n//     \"option1\": \"Ronaldo\",\n//     \"option2\": \"Ali Karimi\",\n//     \"option3\": \"Messi\",\n//     \"option4\": \"Azmun\",\n//     \"answer\": \"1\",\n//     \"difficulty\": \"MEDIUM\"\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all categories names",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems/category"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/problems/category?name=math",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"problems",
+						"category"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "math"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set a category to a problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/problems/add/category?categoryName=math",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"problems",
+						"add",
+						"category"
+					],
+					"query": [
+						{
+							"key": "categoryName",
+							"value": "math"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get category of a problem by title",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems/add/category"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all problems of a categories by categoryName",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/problems/category/math"
+			},
+			"response": []
+		},
+		{
+			"name": "Check problem answer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/problems/add/check?answerIndex=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"problems",
+						"add",
+						"check"
+					],
+					"query": [
+						{
+							"key": "answerIndex",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set a author for a problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n// \"name\": \"sara\",\n// \"username\": \"sara123\"\n// }\n{\n\"name\": \"neda\",\n\"username\": \"neda123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/problems/add/author?teacherUsername=ali123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"problems",
+						"add",
+						"author"
+					],
+					"query": [
+						{
+							"key": "teacherUsername",
+							"value": "ali123"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -28,7 +28,7 @@ public class Student {
     @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     private String name;
 
-    @Column(name = "score", columnDefinition = "INTEGER DEFAULT 0")
+    @Transient
     private Integer score;
 
     public Integer getScore() {
