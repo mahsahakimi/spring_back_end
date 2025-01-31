@@ -1,24 +1,26 @@
 package edu.sharif.cc.controllers;
 
-import edu.sharif.cc.services.ProblemService;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import edu.sharif.cc.dtos.SignInRequestDTO;
+import edu.sharif.cc.dtos.SignUpRequestDTO;
+import edu.sharif.cc.services.AuthenticationService;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
-    private final ProblemService problemService;
 
-    public AuthController(ProblemService problemService) {
-        this.problemService = problemService;
+    @Autowired
+    private AuthenticationService authenticationService;
+
+    @PostMapping("/signup")
+    public String signUp(@RequestBody SignUpRequestDTO signUpRequest) {
+        return authenticationService.signUp(signUpRequest);
     }
 
-//     Signup
-//     @PostMapping(path = "/signup")
-//     public TokenDTO signup(@RequestBody UserDTO user) {
-//         return userService.createUser(user);
-//     }
-
-//     Login
-//    @PostMapping("/login")
-//    }
-
+    @PostMapping("/signin")
+    public String signIn(@RequestBody SignInRequestDTO signInRequest) {
+        return authenticationService.signIn(signInRequest);
+    }
 }
+

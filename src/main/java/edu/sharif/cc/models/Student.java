@@ -20,7 +20,10 @@ public class Student {
     private Long id;
 
     @Column(name = "username", columnDefinition = "TEXT", nullable = false, unique = true)
-    private String username;
+    private String username;   
+
+    @Column(name = "password", columnDefinition = "TEXT", nullable = false)
+    private String password;
 
     @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     private String name;
