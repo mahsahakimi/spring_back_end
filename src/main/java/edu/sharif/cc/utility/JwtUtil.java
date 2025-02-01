@@ -3,7 +3,9 @@ package edu.sharif.cc.utility;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JwtUtil {
 
     private String secretKey = "your_secret_key"; // Secret key for signing

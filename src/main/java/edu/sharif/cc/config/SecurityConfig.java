@@ -2,6 +2,8 @@ package edu.sharif.cc.config;
 
 import edu.sharif.cc.filters.JwtFilter;
 import edu.sharif.cc.utility.JwtUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class SecurityConfig {
-
+    
+    @Autowired
     private final JwtUtil jwtUtil;
 
     public SecurityConfig(JwtUtil jwtUtil) {
@@ -20,13 +23,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests()  // Use authorizeHttpRequests instead of authorizeRequests
-            .requestMatchers("/auth/**").permitAll()  // Use permitAll directly
-            .anyRequest().authenticated()  // Use authenticated directly
+            .authorizeHttpRequests()  
+            .requestMatchers("/auth/**").permitAll()  
+            .anyRequest().authenticated()  
             .and()
             .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-            .csrf().disable();  // Disable CSRF protection for non-browser clients like APIs
-
+            .csrf().disable();  
         return http.build();
     }
 }

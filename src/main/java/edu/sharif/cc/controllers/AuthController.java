@@ -13,14 +13,23 @@ public class AuthController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/signup")
-    public String signUp(@RequestBody SignUpRequestDTO signUpRequest) {
-        return authenticationService.signUp(signUpRequest);
+    @PostMapping("/signup/student")
+    public String studentSignUp(@RequestBody SignUpRequestDTO signUpRequest) {
+        return authenticationService.studentSignUp(signUpRequest);
     }
 
-    @PostMapping("/signin")
-    public String signIn(@RequestBody SignInRequestDTO signInRequest) {
-        return authenticationService.signIn(signInRequest);
+    @PostMapping("/signin/student")
+    public String studentSignIn(@RequestBody SignInRequestDTO signInRequest) {
+        return authenticationService.studentSignIn(signInRequest);
+    }
+    @PostMapping("/signup/teacher")
+    public String teacherSignUp(@RequestBody SignUpRequestDTO signUpRequest) {
+        return authenticationService.teacherSignUp(signUpRequest);
+    }
+
+    @PostMapping("/signin/teacher")
+    public String teacherSignIn(@RequestBody SignInRequestDTO signInRequest) {
+        return authenticationService.teacherSignIn(signInRequest);
     }
 }
 
