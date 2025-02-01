@@ -22,21 +22,23 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUtil jwtUtil;  // Utility class for handling JWT (you should have this class)
+    private JwtUtil jwtUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    public JwtFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+    
     @Override
     protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain) throws ServletException, IOException {
-        // Extract token from request header
         String token = extractToken(request);
         
         if (token != null && jwtUtil.validateToken(token)) {
-            // Extract user information from the token
             String username = jwtUtil.extractUsername(token);
 
-            // Load user details (You can customize this part based on your UserDetailsService)
             UserDetails userDetails = new User(username, "", new ArrayList<>());  // You may also add authorities here
 
             // Create the authentication token

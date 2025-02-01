@@ -11,7 +11,7 @@
 	<groupId>edu.sharif</groupId>
 	<artifactId>clever-climb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>clever-climb</name>
 	<description>A platform for creating questions by teachers and answering by students.</description>
 	<url/>
@@ -64,7 +64,7 @@
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.5</version>
 		</dependency>
-
+	
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>

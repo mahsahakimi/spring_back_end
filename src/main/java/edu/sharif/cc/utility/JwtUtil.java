@@ -2,13 +2,17 @@ package edu.sharif.cc.utility;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Date;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
 
-    private String secretKey = "your_secret_key"; // Secret key for signing
+    private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     // Generate token
     public String generateToken(String username) {
@@ -16,14 +20,14 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour expiration
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
     // Extract username from token
     public String extractUsername(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -41,7 +45,7 @@ public class JwtUtil {
 
     private Date extractExpirationDate(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
